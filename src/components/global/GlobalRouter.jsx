@@ -12,7 +12,7 @@ function GlobalRouter() {
         <Route path="/" element={<Home />} />
         <Route path="/addTodo" element={<AddTodo />} />
         <Route path="/todoList" element={<TodoList />} />
-        <Route path="/todoList/:id" element={<PickedTodo />} />
+        <Route path="/todoList/:pickedId" element={<PickedTodo />} />
       </Routes>
     </>
   );

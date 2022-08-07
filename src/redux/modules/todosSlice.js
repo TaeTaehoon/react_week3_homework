@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const PORT = "3003";
 const initialState = {
+  todos: [],
   todo: {
     id: 0,
     user: "",
@@ -16,18 +18,18 @@ export const __postTodo = createAsyncThunk(
   "todos/__postTodo",
   async (args, thunkAPI) => {
     try {
-      const getList = await axios.get("http://localhost:3003/todos");
+      const getList = await axios.get(`http://localhost:${PORT}/todos`);
       const { user, title, body } = { ...args };
-      const response = await axios.post("http://localhost:3003/todos", {
-        id: getList.data.at(-1).id + 1,
+      const response = await axios.post(`http://localhost:${PORT}/todos`, {
+        id: getList.data?.at(-1)?.id + 1,
         user,
         title,
         body,
       });
-      console.log(response);
-      return "ak";
+
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -36,11 +38,10 @@ export const __getTodos = createAsyncThunk(
   "todos/__getTodos",
   async (args, thunkAPI) => {
     try {
-      const getList = await axios.get("http://localhost:3003/todos");
-      console.log(getList);
-      return "ak";
+      const getList = await axios.get(`http://localhost:${PORT}/todos`);
+      return thunkAPI.fulfillWithValue(getList.data);
     } catch (error) {
-      console.log(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -55,8 +56,7 @@ const todosSlice = createSlice({
     },
     [__postTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
-      state.number = action.payload;
+      state.todo = action.payload;
     },
     [__postTodo.rejected]: (state, action) => {
       state.isLoading = false;
@@ -68,8 +68,8 @@ const todosSlice = createSlice({
     },
     [__getTodos.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
-      state.number = action.payload;
+
+      state.todos = action.payload;
     },
     [__getTodos.rejected]: (state, action) => {
       state.isLoading = false;

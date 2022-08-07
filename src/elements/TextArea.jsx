@@ -16,9 +16,10 @@ function TextArea(props) {
       onInput={numberMaxLength}
       onChange={props.onChange}
       value={props.value}
+      defaultValue={props.defaultValue}
       required
       {...props}
-    ></StTextArea>
+    />
   );
 }
 

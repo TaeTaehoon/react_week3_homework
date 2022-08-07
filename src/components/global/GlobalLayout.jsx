@@ -6,6 +6,7 @@ function GlobalLayout({ children }) {
 }
 
 const StLayout = styled.div`
+  position: relative;
   width: 98vw;
   margin: 0 auto;
   min-width: 550px;

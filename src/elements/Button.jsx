@@ -12,17 +12,18 @@ function Button(props) {
 const StButton = styled.button`
   cursor: pointer;
   border: 1px solid black;
-  border-radius: 15px;
 
   ${({ size }) => {
     switch (size) {
       case "wide":
         return css`
           width: 100%;
+          border-radius: 15px;
         `;
       case "medium":
         return css`
           width: 80px;
+          border-radius: 10px;
         `;
       case "narrow":
         return css`
@@ -32,6 +33,7 @@ const StButton = styled.button`
       default:
         return css`
           width: 120px;
+          border-radius: 10px;
         `;
     }
   }}
